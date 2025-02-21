@@ -10,7 +10,6 @@ Route::get('/', function () {
 });
 
 
-
 Route::get('/dashboard', function () {
     return view('dashboard');
 })->middleware(['auth', 'verified'])->name('dashboard');
@@ -27,7 +26,14 @@ require __DIR__.'/auth.php';
 
 use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\CommentController;
+use App\Models\Announcement;
 
-Route::get('/lop', [AnnouncementController::class, 'index']);
-Route::resource('announcements', AnnouncementController::class);
-Route::resource('comments', CommentController::class)->only(['store', 'destroy']);
+Route::get('/announcements', [AnnouncementController::class, 'index'])->name('announcements.index');
+
+Route::get('/announcements/{id}', [AnnouncementController::class, 'show'])
+    ->name('announcements.show');
+
+    Route::get('/create', [AnnouncementController::class, 'create'])->name('announcements.create');
+
+    Route::post('/announcements/store', [AnnouncementController::class, 'store'])->name('announcements.store');
+

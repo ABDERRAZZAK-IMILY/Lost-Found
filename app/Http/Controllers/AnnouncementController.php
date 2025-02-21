@@ -4,6 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Models\Announcement;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Auth;
+
 
 class AnnouncementController extends Controller
 {
@@ -12,9 +15,10 @@ class AnnouncementController extends Controller
      */
     public function index()
     {
-
-        $announcements= Announcement::all();
-        return view('announcements.index', ['announcements' => $announcements]);
+        
+        return view('announcements.index' , [
+            'annonces' => Announcement::paginate(8)
+        ]);
     }
 
     /**
@@ -22,23 +26,49 @@ class AnnouncementController extends Controller
      */
     public function create()
     {
-        //
+
+     return view('announcements.create');
+   
+
     }
 
     /**
      * Store a newly created resource in storage.
      */
-    public function store(Request $request)
-    {
-        //
-    }
+   
+
+     public function store(Request $request)
+     
+     {
+        
+         $data = $request->validate([
+             'titre' => 'required|string|max:255',
+             'description' => 'required|string',
+             'lieu' => 'required|string',
+             'image' => 'nullable|image|mimes:jpeg,png,jpg,gif|max:2048',
+         ]);
+
+         $data['user_id'] = Auth::id();
+
+     
+         if ($request->hasFile('image')) {
+             $path = $request->file('image')->store('announcements', 'public');
+             $data['image'] = $path;
+         }
+     
+         Announcement::create($data);
+     
+         return redirect()->route('announcements.index')->with('success', 'Annonce publiée avec succès');
+     }
 
     /**
      * Display the specified resource.
      */
     public function show(string $id)
     {
-        //
+        return view('announcements.show', [
+            'annonce' => Announcement::findOrFail($id)
+        ]);
     }
 
     /**

@@ -14,12 +14,10 @@ return new class extends Migration
         Schema::create('announcements', function (Blueprint $table) {
             $table->id();
             $table->string('titre');
-            $table->string('description');
-            $table->string('image');
-            $table->dateTime('date');
+            $table->string('description')->default(null);
+            $table->string('image')->nullable();
             $table->string('lieu');
-            $table->string('contact');
-            $table->enum('status', ['losted', 'founded']);
+            $table->enum('status', ['losted', 'founded'])->default('losted');
             $table->timestamps();
             $table->unsignedBigInteger('user_id');
             $table->foreign('user_id')->references('id')->on('users');

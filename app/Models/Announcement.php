@@ -7,10 +7,6 @@ use Illuminate\Database\Eloquent\Model;
 class Announcement extends Model
 {
     use HasFactory;
-    protected $fillable = [ 'titre',
-    'description',
-    'lieu',
-    'date',
-    'image',];
+    protected $fillable = ['titre', 'description', 'lieu', 'image', 'user_id'];
 
 }

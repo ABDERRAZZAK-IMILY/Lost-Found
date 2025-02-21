@@ -1,8 +1,8 @@
 <?php
 
-use App\Http\Controllers\ObjectController;
 use App\Http\Controllers\ProfileController;
 use Illuminate\Support\Facades\Route;
+
 
 Route::get('/', function () {
 
@@ -37,3 +37,6 @@ Route::get('/announcements/{id}', [AnnouncementController::class, 'show'])
 
     Route::post('/announcements/store', [AnnouncementController::class, 'store'])->name('announcements.store');
 
+
+
+Route::post('/announcements/{announcement}/comments', [CommentController::class, 'store'])->name('comments.store');

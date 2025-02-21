@@ -15,17 +15,33 @@
         <form method="POST" action="">
             @csrf
             @method('PATCH')
-            <button type="submit" class="bg-green-600 hover:bg-green-700 text-white px-5 py-2 rounded-lg shadow-md transition">
-                ✅ Trouvé
+            <button type="submit" class="bg-green-600 hover:bg-green-700 px-5 py-2 rounded-lg shadow-md transition">
+                 Trouvé
             </button>
         </form>
 
         <form method="POST" action="">
             @csrf
-            <button type="submit" class="bg-blue-600 hover:bg-blue-700 text-white px-5 py-2 rounded-lg shadow-md transition">
-                🛠️ C'est à moi
+            <button type="submit" class="bg-blue-600 hover:bg-blue-700 px-5 py-2 rounded-lg shadow-md transition">
+                 C'est à moi
             </button>
         </form>
     </div>
+
+    {{-- Formulaire pour ajouter un commentaire --}}
+    @auth
+    <div class="mt-4">
+        <h2 class="text-lg font-semibold text-gray-700"> Ajouter un commentaire</h2>
+        
+        <form method="POST" action="{{ route('comments.store', $annonce->id) }}">
+            @csrf
+            <textarea name="content" rows="3" class="w-full border rounded-lg px-3 py-2 focus:ring focus:ring-blue-300" placeholder="Écrire un commentaire..." required></textarea>
+            
+            <button type="submit" class="mt-2 bg-blue-500  px-4 py-2 rounded-lg hover:bg-blue-700">
+                Publier
+            </button>
+        </form>
+    </div>
+    @endauth
 </div>
 @endsection

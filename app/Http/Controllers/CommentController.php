@@ -23,4 +23,14 @@ class CommentController extends Controller
 
         return redirect()->back()->with('success', 'Commentaire ajouté avec succès.');
     }
+    public function show($announcementId)
+{
+    $comments = Comment::where('announcement_id', $announcementId)
+        ->with('user')
+        ->latest()
+        ->get();
+
+    return view('annonces.show', compact('comments'));
+}
+
 }

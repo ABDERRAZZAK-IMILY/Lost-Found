@@ -7,6 +7,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Auth;
 
+use App\Models\Comment;
+
 
 class AnnouncementController extends Controller
 {
@@ -64,12 +66,14 @@ class AnnouncementController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show(string $id)
+    public function show($id)
     {
-        return view('announcements.show', [
-            'annonce' => Announcement::findOrFail($id)
-        ]);
+        $annonce = Announcement::findOrFail($id);
+        $comments = Comment::where('announcement_id', $id)->with('user')->latest()->get();
+    
+        return view('announcements.show', compact('annonce', 'comments'));
     }
+    
 
     /**
      * Show the form for editing the specified resource.

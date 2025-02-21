@@ -38,5 +38,7 @@ Route::get('/announcements/{id}', [AnnouncementController::class, 'show'])
     Route::post('/announcements/store', [AnnouncementController::class, 'store'])->name('announcements.store');
 
 
+    // Route::get('/annonces/{id}', [AnnouncementController::class, 'show'])->name('annonces.show');
+
 
 Route::post('/announcements/{announcement}/comments', [CommentController::class, 'store'])->name('comments.store');

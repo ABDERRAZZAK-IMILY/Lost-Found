@@ -28,6 +28,21 @@
         </form>
     </div>
 
+
+    @if ($comments->isNotEmpty())
+    <div class="mt-6">
+        <h2 class="text-lg font-semibold text-gray-700">📢 Commentaires</h2>
+        
+        @foreach ($comments as $comment)
+            <div class="mt-2 p-4 border rounded-lg shadow-sm bg-gray-100">
+                <p class="text-sm text-gray-800"><strong>{{ $comment->user->name }}</strong> - <span class="text-gray-500">{{ $comment->created_at->diffForHumans() }}</span></p>
+                <p class="text-gray-600">{{ $comment->content }}</p>
+            </div>
+        @endforeach
+    </div>
+@endif
+
+
     {{-- Formulaire pour ajouter un commentaire --}}
     @auth
     <div class="mt-4">
